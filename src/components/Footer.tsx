@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const Footer = () => {
@@ -25,7 +24,7 @@ const Footer = () => {
                   <path d="M12 12a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z" />
                 </svg>
               </div>
-              <span className="text-lg font-semibold">BioDiGeo</span>
+              <span className="text-lg font-semibold">Compostaqui</span>
             </div>
             <p className="text-gray-300 text-sm">
               Uma plataforma para conectar pessoas e comunidades a soluções
@@ -95,7 +94,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-12 pt-6 border-t border-bioearth-700 text-sm text-gray-400 flex flex-col md:flex-row justify-between items-center">
-          <p>&copy; 2025 BioDiGeo. Todos os direitos reservados.</p>
+          <p>&copy; 2025 Compostaqui. Todos os direitos reservados.</p>
           <p className="mt-2 md:mt-0">
             Desenvolvido com 💚 para um futuro mais sustentável.
           </p>

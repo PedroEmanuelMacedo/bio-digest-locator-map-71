@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 
@@ -24,7 +23,7 @@ const Header = () => {
               <path d="M12 12a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z" />
             </svg>
           </div>
-          <span className="text-lg font-semibold text-biogreen-800">BioDiGeo</span>
+          <span className="text-lg font-semibold text-biogreen-800">Compostaqui</span>
         </div>
         
         <nav className="hidden md:flex items-center space-x-6">

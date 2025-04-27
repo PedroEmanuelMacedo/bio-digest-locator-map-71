@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,7 +31,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h3 className="font-medium">Email</h3>
-                  <p className="text-muted-foreground">contato@biodigestores.org</p>
+                  <p className="text-muted-foreground">compostaqui@gmail.com</p>
                 </div>
               </div>
               
@@ -44,7 +43,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h3 className="font-medium">Telefone</h3>
-                  <p className="text-muted-foreground">(11) 3456-7890</p>
+                  <p className="text-muted-foreground">(41) 98745-3074</p>
                 </div>
               </div>
               
@@ -57,7 +56,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h3 className="font-medium">Endereço</h3>
-                  <p className="text-muted-foreground">Rua das Árvores, 123 - Jardim Ecológico, São Paulo - SP</p>
+                  <p className="text-muted-foreground">Praça Gen. Osório, 125 - Centro, Curitiba - PR, 80020-010</p>
                 </div>
               </div>
             </div>
