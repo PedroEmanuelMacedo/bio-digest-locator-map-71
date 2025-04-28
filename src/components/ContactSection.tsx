@@ -1,10 +1,49 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Instagram } from 'lucide-react';
+import { useToast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+
+const formSchema = z.object({
+  name: z.string().min(1, "Nome é obrigatório"),
+  email: z.string().min(1, "Email é obrigatório").email("Email inválido"),
+  subject: z.string().min(1, "Assunto é obrigatório"),
+  message: z.string().min(1, "Mensagem é obrigatória"),
+});
 
 const ContactSection = () => {
+  const { toast } = useToast();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    },
+  });
+
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    toast({
+      title: "Email enviado com sucesso",
+      description: "Entraremos em contato em breve!",
+    });
+    form.reset();
+  };
+
   return (
     <section id="contato" className="w-full py-12 md:py-24 lg:py-32 bg-white">
       <div className="container px-4 md:px-6">
@@ -75,40 +114,87 @@ const ContactSection = () => {
           </div>
           
           <div className="bg-biogreen-50/50 p-6 rounded-lg">
-            <form className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-medium">Nome</label>
-                  <Input id="name" placeholder="Seu nome" />
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nome</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Seu nome" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="seu.email@example.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium">Email</label>
-                  <Input id="email" type="email" placeholder="seu.email@example.com" />
+                
+                <FormField
+                  control={form.control}
+                  name="subject"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Assunto</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Assunto da mensagem" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Mensagem</FormLabel>
+                      <FormControl>
+                        <Textarea 
+                          placeholder="Escreva sua mensagem aqui..." 
+                          className="min-h-[150px]" 
+                          {...field} 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center space-x-2">
+                    <input 
+                      type="checkbox" 
+                      id="consent" 
+                      className="rounded border-gray-300 text-biogreen-600 focus:ring-biogreen-500" 
+                    />
+                    <label htmlFor="consent" className="text-xs text-muted-foreground">
+                      Concordo em receber atualizações por e-mail.
+                    </label>
+                  </div>
+                  <Button type="submit" className="bg-biogreen-600 hover:bg-biogreen-700">
+                    Enviar Mensagem
+                  </Button>
                 </div>
-              </div>
-              
-              <div className="space-y-2">
-                <label htmlFor="subject" className="text-sm font-medium">Assunto</label>
-                <Input id="subject" placeholder="Assunto da mensagem" />
-              </div>
-              
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-medium">Mensagem</label>
-                <Textarea id="message" placeholder="Escreva sua mensagem aqui..." className="min-h-[150px]" />
-              </div>
-              
-              <div className="flex justify-between items-center">
-                <div className="flex items-center space-x-2">
-                  <input type="checkbox" id="consent" className="rounded border-gray-300 text-biogreen-600 focus:ring-biogreen-500" />
-                  <label htmlFor="consent" className="text-xs text-muted-foreground">
-                    Concordo em receber atualizações por e-mail.
-                  </label>
-                </div>
-                <Button type="submit" className="bg-biogreen-600 hover:bg-biogreen-700">
-                  Enviar Mensagem
-                </Button>
-              </div>
-            </form>
+              </form>
+            </Form>
           </div>
         </div>
       </div>
