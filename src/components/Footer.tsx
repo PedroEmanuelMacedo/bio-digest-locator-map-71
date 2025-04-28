@@ -35,7 +35,7 @@ const Footer = () => {
             </p>
             <div className="flex gap-4 pt-2">
               <a 
-                href="https://www.instagram.com/p/DIXhjXEtaAz/?igsh=MXVsNTI1emZ6ZXR4bQ==" 
+                href="https://www.instagram.com/up_compostaqui/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-white hover:text-biogreen-300 transition-colors"

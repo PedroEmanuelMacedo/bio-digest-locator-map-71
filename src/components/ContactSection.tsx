@@ -103,7 +103,7 @@ const ContactSection = () => {
             
             <div className="flex gap-4">
               <a 
-                href="https://www.instagram.com/p/DIXhjXEtaAz/?igsh=MXVsNTI1emZ6ZXR4bQ==" 
+                href="https://www.instagram.com/up_compostaqui/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="h-10 w-10 rounded-full bg-bioearth-100 flex items-center justify-center text-bioearth-700 hover:bg-bioearth-200 transition-colors"
