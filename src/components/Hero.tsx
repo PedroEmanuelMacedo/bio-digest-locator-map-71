@@ -3,6 +3,13 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 
 const Hero = () => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 xl:py-40 hero-pattern relative overflow-hidden">
       <div className="container px-4 md:px-6 flex flex-col items-center text-center space-y-8">
@@ -19,10 +26,17 @@ const Hero = () => {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 min-[400px]:gap-6 justify-center">
-          <Button className="bg-biogreen-600 hover:bg-biogreen-700 text-white rounded-full px-8">
+          <Button 
+            className="bg-biogreen-600 hover:bg-biogreen-700 text-white rounded-full px-8"
+            onClick={() => scrollToSection('mapa')}
+          >
             Explorar Mapa
           </Button>
-          <Button variant="outline" className="rounded-full px-8 border-biogreen-600 text-bioearth-800 hover:bg-biogreen-50">
+          <Button 
+            variant="outline" 
+            className="rounded-full px-8 border-biogreen-600 text-bioearth-800 hover:bg-biogreen-50"
+            onClick={() => scrollToSection('sobre')}
+          >
             Saiba Mais
           </Button>
         </div>
