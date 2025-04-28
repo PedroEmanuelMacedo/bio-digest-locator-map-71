@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 
@@ -33,11 +34,6 @@ const Header = () => {
           <a href="#mapa" className="text-sm font-medium text-foreground hover:text-biogreen-600 transition-colors">Mapa</a>
           <a href="#contato" className="text-sm font-medium text-foreground hover:text-biogreen-600 transition-colors">Contato</a>
         </nav>
-        
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="hidden sm:inline-flex">Entrar</Button>
-          <Button variant="default" size="sm" className="bg-biogreen-600 hover:bg-biogreen-700">Registrar</Button>
-        </div>
       </div>
     </header>
   );

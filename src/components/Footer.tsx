@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Instagram } from 'lucide-react';
 
@@ -5,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="bg-bioearth-800 text-white">
       <div className="container px-4 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-biogreen-500 flex items-center justify-center">
@@ -50,30 +51,17 @@ const Footer = () => {
               <li><a href="#sobre" className="hover:text-biogreen-300 transition-colors">Sobre Biodigestores</a></li>
               <li><a href="#como-funciona" className="hover:text-biogreen-300 transition-colors">Como Funciona</a></li>
               <li><a href="#beneficios" className="hover:text-biogreen-300 transition-colors">Benefícios</a></li>
-              <li><a href="#mapa" className="hover:text-biogreen-300 transition-colors">Mapa de Biodigestores</a></li>
-              <li><a href="#" className="hover:text-biogreen-300 transition-colors">Blog</a></li>
-              <li><a href="#" className="hover:text-biogreen-300 transition-colors">Recursos Educativos</a></li>
             </ul>
           </div>
           
           <div>
             <h3 className="font-semibold text-lg mb-3">Biodigestores</h3>
             <ul className="space-y-2 text-sm text-gray-300">
-              <li><a href="#" className="hover:text-biogreen-300 transition-colors">Domésticos</a></li>
+              <li><a href="#mapa" className="hover:text-biogreen-300 transition-colors">Mapa de Biodigestores</a></li>
               <li><a href="#" className="hover:text-biogreen-300 transition-colors">Comunitários</a></li>
               <li><a href="#" className="hover:text-biogreen-300 transition-colors">Rurais</a></li>
               <li><a href="#" className="hover:text-biogreen-300 transition-colors">Industriais</a></li>
               <li><a href="#" className="hover:text-biogreen-300 transition-colors">Educacionais</a></li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="font-semibold text-lg mb-3">Suporte</h3>
-            <ul className="space-y-2 text-sm text-gray-300">
-              <li><a href="#contato" className="hover:text-biogreen-300 transition-colors">Contato</a></li>
-              <li><a href="#" className="hover:text-biogreen-300 transition-colors">FAQ</a></li>
-              <li><a href="#" className="hover:text-biogreen-300 transition-colors">Política de Privacidade</a></li>
-              <li><a href="#" className="hover:text-biogreen-300 transition-colors">Termos de Uso</a></li>
             </ul>
           </div>
         </div>
