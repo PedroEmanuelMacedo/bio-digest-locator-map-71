@@ -4,6 +4,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Button } from './ui/button';
 import { toast } from '@/hooks/use-toast';
+import { MapPin, Navigation } from 'lucide-react';
 
 type Biodigestor = {
   id: number;
@@ -131,9 +132,64 @@ export const MapViewer: React.FC<MapViewerProps> = ({ selectedLocation, biodiges
     }
   }, [biodigestors]);
 
+  // Função para centralizar o mapa na localização atual do usuário
+  const handleUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          if (map.current) {
+            map.current.flyTo({
+              center: [longitude, latitude],
+              zoom: 14,
+              essential: true
+            });
+            
+            // Adicionar marcador de localização do usuário
+            const userLocationMarker = new mapboxgl.Marker({
+              color: '#3b82f6',
+              scale: 0.8
+            })
+              .setLngLat([longitude, latitude])
+              .addTo(map.current);
+            
+            toast({
+              title: "Localização encontrada",
+              description: "O mapa foi centralizado em sua localização atual.",
+            });
+          }
+        },
+        (error) => {
+          console.error("Erro ao obter localização:", error);
+          toast({
+            title: "Erro de localização",
+            description: "Não foi possível obter sua localização atual.",
+            variant: "destructive"
+          });
+        }
+      );
+    } else {
+      toast({
+        title: "Geolocalização indisponível",
+        description: "Seu navegador não suporta geolocalização.",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="relative h-full w-full">
       <div ref={mapContainer} className="h-full w-full rounded-lg overflow-hidden" />
+      
+      {/* Botão de localização do usuário */}
+      <Button 
+        variant="secondary"
+        size="icon"
+        className="absolute bottom-4 right-4 bg-white text-biogreen-600 hover:bg-biogreen-50 shadow-md rounded-full z-10"
+        onClick={handleUserLocation}
+      >
+        <Navigation className="h-5 w-5" />
+      </Button>
     </div>
   );
 };
