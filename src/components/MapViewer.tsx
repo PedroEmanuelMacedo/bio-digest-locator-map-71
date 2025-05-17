@@ -25,8 +25,8 @@ export const MapViewer: React.FC<MapViewerProps> = ({ selectedLocation, biodiges
   const map = useRef<mapboxgl.Map | null>(null);
   const markersRef = useRef<mapboxgl.Marker[]>([]);
 
-  // Define a chave de API do Mapbox diretamente
-  const mapboxApiKey = 'pk.eyJ1Ijoib2FjLWNvbXBvc3RhcXVpIiwiYSI6ImNsdXBid3pqZjBqMWsyam50NGRxM3kwbXYifQ.ru12-YAtwyi54Q-kGqxlQw';
+  // Corrigindo a chave de API do Mapbox
+  const mapboxApiKey = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
   // Função para inicializar o mapa
   const initializeMap = () => {
@@ -42,7 +42,7 @@ export const MapViewer: React.FC<MapViewerProps> = ({ selectedLocation, biodiges
         style: 'mapbox://styles/mapbox/streets-v12',
         center: selectedLocation 
           ? [selectedLocation.lng, selectedLocation.lat] 
-          : [-49.2, -16.7], // Centro do Brasil como padrão
+          : [-49.2, -25.4], // Centro de Curitiba como padrão
         zoom: selectedLocation ? 11 : 4
       });
 
@@ -122,7 +122,10 @@ export const MapViewer: React.FC<MapViewerProps> = ({ selectedLocation, biodiges
   // Efeito para inicializar o mapa quando o componente montar
   useEffect(() => {
     // Inicializar o mapa
-    initializeMap();
+    const cleanup = initializeMap();
+    
+    // Limpar quando o componente desmontar
+    return cleanup;
   }, [selectedLocation]);
 
   // Efeito para atualizar os marcadores quando os biodigestores mudarem
@@ -193,3 +196,4 @@ export const MapViewer: React.FC<MapViewerProps> = ({ selectedLocation, biodiges
     </div>
   );
 };
+
