@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { Button } from './ui/button';
+import { toast } from '@/hooks/use-toast';
 
 type Biodigestor = {
   id: number;
@@ -22,40 +23,50 @@ export const MapViewer: React.FC<MapViewerProps> = ({ selectedLocation, biodiges
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const markersRef = useRef<mapboxgl.Marker[]>([]);
-  const [mapboxApiKeyInput, setMapboxApiKeyInput] = useState('');
-  const [mapboxApiKey, setMapboxApiKey] = useState('');
+
+  // Define a chave de API do Mapbox diretamente
+  const mapboxApiKey = 'pk.eyJ1Ijoib2FjLWNvbXBvc3RhcXVpIiwiYSI6ImNsdXBid3pqZjBqMWsyam50NGRxM3kwbXYifQ.ru12-YAtwyi54Q-kGqxlQw';
 
   // Função para inicializar o mapa
   const initializeMap = () => {
-    if (!mapContainer.current || !mapboxApiKey) return;
+    if (!mapContainer.current) return;
 
-    // Definir a chave de API do Mapbox
-    mapboxgl.accessToken = mapboxApiKey;
-    
-    // Criar o mapa
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v12',
-      center: selectedLocation 
-        ? [selectedLocation.lng, selectedLocation.lat] 
-        : [-49.2, -16.7], // Centro do Brasil como padrão
-      zoom: selectedLocation ? 11 : 4
-    });
+    try {
+      // Definir a chave de API do Mapbox
+      mapboxgl.accessToken = mapboxApiKey;
+      
+      // Criar o mapa
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center: selectedLocation 
+          ? [selectedLocation.lng, selectedLocation.lat] 
+          : [-49.2, -16.7], // Centro do Brasil como padrão
+        zoom: selectedLocation ? 11 : 4
+      });
 
-    // Adicionar controles de navegação
-    map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
+      // Adicionar controles de navegação
+      map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-    // Adicionar marcadores quando o mapa é carregado
-    map.current.on('load', () => {
-      addMarkersToMap();
-    });
+      // Adicionar marcadores quando o mapa é carregado
+      map.current.on('load', () => {
+        addMarkersToMap();
+      });
 
-    return () => {
-      if (map.current) {
-        map.current.remove();
-        map.current = null;
-      }
-    };
+      return () => {
+        if (map.current) {
+          map.current.remove();
+          map.current = null;
+        }
+      };
+    } catch (error) {
+      console.error("Erro ao inicializar o mapa:", error);
+      toast({
+        title: "Erro ao carregar o mapa",
+        description: "Não foi possível inicializar o mapa. Verifique sua conexão.",
+        variant: "destructive"
+      });
+    }
   };
 
   // Adiciona marcadores ao mapa
@@ -109,20 +120,9 @@ export const MapViewer: React.FC<MapViewerProps> = ({ selectedLocation, biodiges
 
   // Efeito para inicializar o mapa quando o componente montar
   useEffect(() => {
-    if (!mapboxApiKey) return;
-    
-    // Se o mapa já existe, apenas ajuste o centro
-    if (map.current && selectedLocation) {
-      map.current.flyTo({
-        center: [selectedLocation.lng, selectedLocation.lat],
-        zoom: 11,
-        essential: true
-      });
-    } else {
-      // Inicializar o mapa
-      initializeMap();
-    }
-  }, [mapboxApiKey, selectedLocation]);
+    // Inicializar o mapa
+    initializeMap();
+  }, [selectedLocation]);
 
   // Efeito para atualizar os marcadores quando os biodigestores mudarem
   useEffect(() => {
@@ -131,70 +131,9 @@ export const MapViewer: React.FC<MapViewerProps> = ({ selectedLocation, biodiges
     }
   }, [biodigestors]);
 
-  // Salvar a chave da API do Mapbox no localStorage
-  const handleSaveMapboxApiKey = () => {
-    if (mapboxApiKeyInput) {
-      setMapboxApiKey(mapboxApiKeyInput);
-      localStorage.setItem('mapbox-api-key', mapboxApiKeyInput);
-    }
-  };
-
-  // Carregar a chave da API do Mapbox do localStorage quando o componente montar
-  useEffect(() => {
-    const storedKey = localStorage.getItem('mapbox-api-key');
-    if (storedKey) {
-      setMapboxApiKey(storedKey);
-      setMapboxApiKeyInput(storedKey);
-    }
-  }, []);
-
-  if (!mapboxApiKey) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full space-y-4 p-4">
-        <div className="text-center space-y-2 max-w-md">
-          <h3 className="font-bold text-xl">Chave de API do Mapbox Necessária</h3>
-          <p className="text-muted-foreground text-sm">
-            Para visualizar o mapa de biodigestores, insira sua chave pública de API do Mapbox.
-            Você pode obter uma gratuitamente em <a href="https://mapbox.com" target="_blank" rel="noreferrer" className="text-biogreen-600 hover:underline">mapbox.com</a>.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-2 mt-4">
-            <Input
-              type="text"
-              placeholder="Cole sua chave pública do Mapbox"
-              value={mapboxApiKeyInput}
-              onChange={(e) => setMapboxApiKeyInput(e.target.value)}
-              className="flex-1"
-            />
-            <Button onClick={handleSaveMapboxApiKey} className="bg-biogreen-600 hover:bg-biogreen-700">
-              Salvar e Carregar Mapa
-            </Button>
-          </div>
-          <p className="text-xs text-muted-foreground mt-2">
-            Sua chave será salva apenas no seu navegador e não será compartilhada.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="relative h-full w-full">
       <div ref={mapContainer} className="h-full w-full rounded-lg overflow-hidden" />
     </div>
-  );
-};
-
-// Componente Input utilizado apenas no formulário de API key do Mapbox
-const Input = ({ 
-  className, 
-  type = "text", 
-  ...props 
-}: React.InputHTMLAttributes<HTMLInputElement> & { className?: string }) => {
-  return (
-    <input
-      type={type}
-      className={`flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
-      {...props}
-    />
   );
 };

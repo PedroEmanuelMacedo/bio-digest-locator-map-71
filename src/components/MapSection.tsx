@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { MapViewer } from "./MapViewer";
 import { MapPin, Search, Filter } from "lucide-react";
+import { toast } from '@/hooks/use-toast';
 
 // Dados de exemplo para biodigestores
 const EXAMPLE_BIODIGESTORS = [
@@ -26,15 +27,33 @@ const MapSection = () => {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         });
+        toast({
+          title: "Localização encontrada",
+          description: "Exibindo biodigestores próximos à sua localização.",
+        });
       }, (error) => {
         console.error("Error getting location:", error);
         // Usar uma localização padrão
         setSelectedLocation({ lat: -23.5505, lng: -46.6333 });
+        toast({
+          title: "Erro ao obter localização",
+          description: "Usando localização padrão.",
+          variant: "destructive"
+        });
       });
     } else {
       // Fallback para navegadores sem geolocalização
       setSelectedLocation({ lat: -23.5505, lng: -46.6333 });
+      toast({
+        title: "Geolocalização indisponível",
+        description: "Seu navegador não suporta geolocalização.",
+        variant: "destructive"
+      });
     }
+  };
+  
+  const handleUseMyLocation = () => {
+    handleSearch();
   };
   
   return (
@@ -77,7 +96,11 @@ const MapSection = () => {
                 </div>
                 
                 <div className="flex justify-center">
-                  <Button variant="outline" className="flex items-center gap-2 border-bioblue-200 text-bioblue-700">
+                  <Button 
+                    variant="outline" 
+                    className="flex items-center gap-2 border-bioblue-200 text-bioblue-700"
+                    onClick={handleUseMyLocation}
+                  >
                     <MapPin size={16} />
                     Usar Minha Localização
                   </Button>
