@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { FileText, Book, BookOpen } from 'lucide-react';
@@ -34,32 +35,32 @@ const ExpertStudiesContent = () => {
           <TabsContent value="articles">
             <div className="grid gap-6 md:grid-cols-2">
               <StudyCard 
+                id="efficiency-biodigestors"
                 title="Eficiência de Biodigestores Urbanos"
                 author="Dra. Maria Silva, UFPR"
                 year="2023"
                 description="Estudo comparativo sobre a eficiência energética de biodigestores em diferentes ambientes urbanos no Brasil."
-                link="#"
               />
               <StudyCard 
+                id="anaerobic-biodigestion"
                 title="Biodigestão Anaeróbica em Ambientes Controlados"
                 author="Dr. João Pereira, USP"
                 year="2022"
                 description="Análise dos processos de biodigestão anaeróbica e sua aplicabilidade em projetos de compostagem urbana."
-                link="#"
               />
               <StudyCard 
+                id="environmental-impact"
                 title="Impacto Ambiental da Compostagem Urbana"
                 author="Profa. Ana Costa, UFRJ"
                 year="2023"
                 description="Avaliação do impacto ambiental positivo da implementação de sistemas de compostagem em grandes cidades."
-                link="#"
               />
               <StudyCard 
+                id="biogas-domestic"
                 title="Biogás de Resíduos Orgânicos Domésticos"
                 author="Dr. Carlos Mendes, Unicamp"
                 year="2021"
                 description="Pesquisa sobre o potencial de geração de biogás a partir de resíduos orgânicos domésticos em biodigestores comunitários."
-                link="#"
               />
             </div>
           </TabsContent>
@@ -126,12 +127,12 @@ const ExpertStudiesContent = () => {
 };
 
 // Componente de Card para estudos e artigos
-const StudyCard = ({ title, author, year, description, link }: { 
+const StudyCard = ({ id, title, author, year, description }: { 
+  id: string;
   title: string; 
   author: string; 
   year: string; 
-  description: string; 
-  link: string;
+  description: string;
 }) => {
   return (
     <Card className="hover:shadow-md transition-shadow">
@@ -141,13 +142,13 @@ const StudyCard = ({ title, author, year, description, link }: {
       </CardHeader>
       <CardContent>
         <p className="text-gray-600 mb-4">{description}</p>
-        <a href={link} className="text-biogreen-600 hover:text-biogreen-800 text-sm font-medium flex items-center">
+        <Link to={`/estudos/${id}`} className="text-biogreen-600 hover:text-biogreen-800 text-sm font-medium flex items-center">
           Acessar estudo completo
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1">
             <path d="M7 7h10v10" />
             <path d="M7 17 17 7" />
           </svg>
-        </a>
+        </Link>
       </CardContent>
     </Card>
   );
