@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -25,8 +24,8 @@ export const MapViewer: React.FC<MapViewerProps> = ({ selectedLocation, biodiges
   const map = useRef<mapboxgl.Map | null>(null);
   const markersRef = useRef<mapboxgl.Marker[]>([]);
 
-  // Corrigindo a chave de API do Mapbox
-  const mapboxApiKey = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
+  // Usando a nova chave de API do Mapbox fornecida
+  const mapboxApiKey = 'pk.eyJ1IjoiZGF2aTMzIiwiYSI6ImNtYnprbW9nbTBreGoyaXB5bHQ0OHFtcjAifQ.iGBbvJTjU3E2fy5bZ5ARAA';
 
   // Função para inicializar o mapa
   const initializeMap = () => {
@@ -196,4 +195,3 @@ export const MapViewer: React.FC<MapViewerProps> = ({ selectedLocation, biodiges
     </div>
   );
 };
-
